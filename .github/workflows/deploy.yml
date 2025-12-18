@@ -37,4 +37,4 @@ jobs:
 
           cd backend
           npm install
-          pm2 restart backend_process || pm2 start index.js --name backend
+          pm2 restart backend_process || pm2 start index.js --name backend_process
