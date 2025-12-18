@@ -23,7 +23,7 @@ jobs:
       run: |
         cd backend
         npm install
-        node index.js
+        timeout 10s node index.js
 
 
     # Deployment on YOUR VM
