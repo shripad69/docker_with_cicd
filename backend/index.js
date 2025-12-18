@@ -143,6 +143,16 @@ app.delete("/delete-todo", auth, async(req, res) => {
   }
 })
 
+app.get("/cicd-check", (req, res) => {
+  res.json({
+    status: "OK",
+    message: "CI/CD DEPLOYMENT SUCCESS",
+    version: "v1",
+    time: new Date().toISOString()
+  });
+});
+
+
 app.listen(port, () => {
   console.log(`Server running on port ${port}`);
 });
