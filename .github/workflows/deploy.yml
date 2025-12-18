@@ -36,5 +36,5 @@ jobs:
           git pull origin main
 
           cd backend
-          npm install
-          pm2 restart backend_process || pm2 start index.js --name backend_process
+          /usr/bin/npm install
+          /usr/bin/pm2 restart backend_process || /usr/bin/pm2 start index.js --name backend_process
