@@ -23,7 +23,15 @@ jobs:
       run: |
         cd backend
         npm install
-        timeout 10s node index.js
+
+        node index.js &
+        PID=$!
+
+        sleep 5
+
+        curl -f http://localhost:8080/health
+
+        kill $PID
 
 
     # Deployment on YOUR VM
