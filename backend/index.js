@@ -6,11 +6,12 @@ const jwt = require("jsonwebtoken");
 const secretKey = "abcde12345";
 const { auth } = require("./middleware/auth.js");
 const app = express();
-const port = 8080;
+const port = process.env.PORT;
+const env = require('dotenv').config()
 
 app.use(cors());
-
 app.use(express.json());
+
 
 app.post("/signup", async (req, res) => {
   const username = req.body.username;

@@ -1,9 +1,8 @@
 const mongoose = require("mongoose");
 const Schema = mongoose.Schema;
-mongoose.connect(
-  "mongodb+srv://shri:Shripad%401336@cluster0.rvkqs7c.mongodb.net/todo_app"
-);
+const env = require('dotenv').config()
 
+mongoose.connect(process.env.MONGO_URL);
 const userSchema = new Schema({
 
   username: {
