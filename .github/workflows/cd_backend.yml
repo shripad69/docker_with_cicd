@@ -24,12 +24,10 @@ jobs:
       - name: Build and Push to Docker Hub
         uses: docker/build-push-action@v5
         with:
-          # Setting the context to ./backend means Docker treats that folder as the "root"
+          # Context is set to the backend folder so it finds package.json
           context: ./backend
-          # The path to the Dockerfile relative to the repository root
           file: ./backend/Dockerfile
           push: true
-          # Forces a fresh build to avoid using old, broken cached layers
           no-cache: true
           tags: |
             shripad69/todo_doc_cicd:latest
@@ -46,15 +44,15 @@ jobs:
           username: ${{ secrets.VM_USER }}
           key: ${{ secrets.SSH_PRIVATE_KEY }}
           script: |
-            # 1. Pull the new image from Docker Hub
-            docker pull shripad69/todo_doc_cicd:latest
+            # 1. Pull the new image from Docker Hub (using sudo for permissions)
+            sudo docker pull shripad69/todo_doc_cicd:latest
 
             # 2. Stop and remove the old container if it exists
-            docker stop backend-container || true
-            docker rm backend-container || true
+            sudo docker stop backend-container || true
+            sudo docker rm backend-container || true
 
-            # 3. Run the new container with environment variables
-            docker run -d \
+            # 3. Run the new container with your environment variables
+            sudo docker run -d \
               --name backend-container \
               -p 8080:8080 \
               --restart always \
@@ -62,5 +60,5 @@ jobs:
               -e MONGO_URL="${{ secrets.MONGO_URL }}" \
               shripad69/todo_doc_cicd:latest
 
-            # 4. Clean up old unused images to save disk space on the VM
-            docker image prune -f
+            # 4. Clean up old/dangling images to save disk space
+            sudo docker image prune -f
