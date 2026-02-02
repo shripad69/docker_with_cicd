@@ -73,12 +73,14 @@ jobs:
             # 2. Update Backend Container
             sudo docker stop backend-container || true
             sudo docker rm backend-container || true
+            # Inside the 'deploy' job script:
             sudo docker run -d \
-              --name backend-container \
-              -p 8080:8080 \
-              --restart always \
-              -e MONGO_URL="${{ secrets.MONGO_URL }}" \
-              shripad69/todo_backend:latest
+            --name backend-container \
+            -p 8080:8080 \
+            --restart always \
+            -e PORT=8080 \
+            -e MONGO_URL="${{ secrets.MONGO_URL }}" \
+            shripad69/todo_backend:latest
 
             # 3. Update Frontend Container
             sudo docker stop frontend-container || true
